@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
-import App from './App.vue';
-// import App3 from './App3.vue';
+// import App from './App.vue';
+import App3 from './App3.vue';
 
 import './index.css';
 
-createApp(App).mount('#app')
+createApp(App3).mount('#app')

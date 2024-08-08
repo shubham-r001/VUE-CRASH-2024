@@ -8,6 +8,7 @@ let productName = ref(null);
 let price = ref(null);
 let isError = ref(false);
 let historyItem = ref([]);
+let transitionType = ref("");
 let checkbalance = ref(false);
 
 
@@ -29,11 +30,13 @@ const handleSubmit = () => {
         isError.value = false;
         totalBalance.value += Number(digit);
         productName.value = "";
+        transitionType.value = "credit";
         price.value = "";
     } else if (symbol === "-") {
         isError.value = false;
         totalBalance.value -= Number(digit);
         expanseBalance.value += Number(digit);
+        transitionType.value = "debit";
         productName.value = "";
         price.value = "";
     } else {
@@ -43,7 +46,8 @@ const handleSubmit = () => {
 
     let payload = {
         pName: name,
-        pPrice: productPrice
+        pPrice: productPrice,
+        type: transitionType.value
     }
 
     historyItem.value.push(payload)
@@ -73,11 +77,13 @@ const handleSubmit = () => {
             <h3 class="text-lg font-bold border-b-2 border-slate-200">History</h3>
 
             <div class="max-h-[3rem] overflow-y-auto">
-                <div v-for="(item, id) in historyItem" class="flex flex-col gap-2 my-2">
-                    <div class="flex justify-between items-center border-2 py-1 px-2 bg-slate-50">
+                <div v-for="(item, id) in historyItem" class="flex flex-col gap-2 my-2 relative">
+                    <div class="flex justify-between items-center border-2 py-1 px-3 bg-slate-50">
                         <span>{{ item.pName }}</span>
                         <span>₹{{ item.pPrice }}</span>
                     </div>
+
+                    <div class="bg-red-900 w-2 h-9 absolute top-0 left-0"></div>
                 </div>
             </div>
         </div>
